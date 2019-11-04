@@ -13,7 +13,8 @@ using IQueryProvider = Swizzer.Shared.Common.Providers.IQueryProvider;
 namespace Swizzer.Web.Api.Controllers
 {
     [Route("api/[controller]")]
-    public abstract class SwizzerControllerApi : Controller
+    [ApiController]
+    public abstract class SwizzerControllerApi : ControllerBase
     {
         private readonly ICacheService _cacheService;
         private readonly IQueryDispatcher _queryDispatcher;
@@ -63,6 +64,7 @@ namespace Swizzer.Web.Api.Controllers
         }
 
         protected TEntity GetCachedObject<TEntity>(Guid id)
+            where TEntity : IIdProvider
             => _cacheService.Get<TEntity>(id);
     }
 }

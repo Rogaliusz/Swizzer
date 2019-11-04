@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Autofac;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Swizzer.Shared.Common.Extensions;
 using Swizzer.Web.Infrastructure.Framework.Caching;
@@ -29,6 +30,10 @@ namespace Swizzer.Web.Infrastructure.Framework
                 .SingleInstance();
 
             builder.RegisterInstance(securitySettings)
+                .SingleInstance();
+
+            builder.RegisterType<MemoryCache>()
+                .As<IMemoryCache>()
                 .SingleInstance();
 
             builder.RegisterType<CacheService>()

@@ -15,6 +15,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Swizzer.Web.Api.Middlewares;
 using Swizzer.Web.Infrastructure.Framework.Security;
 using Swizzer.Web.Infrastructure.IoC;
 
@@ -23,7 +24,7 @@ namespace Swizzer.Web.Api
     public class Startup
     {
         public SecuritySettings SecuritySettings { get; private set; }
-        public IContainer Container { get; private set; }
+        public ILifetimeScope Container { get; private set; }
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
@@ -32,32 +33,40 @@ namespace Swizzer.Web.Api
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-            services.AddAuthentication(o => o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(o =>
+            services.AddTransient<ExceptionMiddleware>();
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(x =>
                 {
                     if (SecuritySettings == null)
                     {
                         SecuritySettings = Container.Resolve<SecuritySettings>();
                     }
 
-                    o.SaveToken = true;
-                    o.TokenValidationParameters = new TokenValidationParameters
+                    var key = Encoding.ASCII.GetBytes(SecuritySettings.SecredKey);
+
+                    x.RequireHttpsMetadata = false;
+                    x.SaveToken = true;
+                    x.TokenValidationParameters = new TokenValidationParameters
                     {
-                        ValidateAudience = false,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecuritySettings.SecredKey)),
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(key),
+                        ValidateIssuer = false,
+                        ValidateAudience = false
                     };
                 });
+        }
 
-            var builder = new ContainerBuilder();
-            builder.Populate(services);
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
             builder.RegisterModule(new MainModule(Configuration));
-
-            Container = builder.Build();
-
-            return new AutofacServiceProvider(Container);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -68,11 +77,14 @@ namespace Swizzer.Web.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            Container = app.ApplicationServices.GetAutofacRoot();
+
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {

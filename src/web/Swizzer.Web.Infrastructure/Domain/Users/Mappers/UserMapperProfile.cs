@@ -1,4 +1,5 @@
-﻿using Swizzer.Shared.Common.Domain.Users.Dto;
+﻿using Swizzer.Shared.Common.Domain.Users.Commands;
+using Swizzer.Shared.Common.Domain.Users.Dto;
 using Swizzer.Web.Infrastructure.Domain.Users.Models;
 using Swizzer.Web.Infrastructure.Mappers;
 using System;
@@ -13,6 +14,8 @@ namespace Swizzer.Web.Infrastructure.Domain.Users.Mappers
         {
             CreateMap<User, UserDto>()
                 .ReverseMap();
+
+            CreateMap<UserRegisterCommand, User>();
         }
     }
 }

@@ -11,9 +11,10 @@ namespace Swizzer.Web.Infrastructure.Framework
     {
         void Set<TEntity>(TEntity entity)
             where TEntity : IIdProvider;
-        TEntity Get<TEntity>(object key);
+        TEntity Get<TEntity>(object key)
+            where TEntity : IIdProvider;
     }
-    public class CacheService
+    public class CacheService : ICacheService
     {
         private readonly CacheSettings _cacheSettings;
         private readonly IMemoryCache _memoryCache;
@@ -28,7 +29,7 @@ namespace Swizzer.Web.Infrastructure.Framework
 
         public void Set<TEntity>(TEntity entity)
             where TEntity : IIdProvider
-            => _memoryCache.Set(entity, GetKey<TEntity>(entity.Id), _cacheSettings.Duration);
+            => _memoryCache.Set(GetKey<TEntity>(entity.Id), entity, _cacheSettings.Duration);
 
         public TEntity Get<TEntity>(object key)
             where TEntity : IIdProvider

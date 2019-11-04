@@ -8,5 +8,6 @@ namespace Swizzer.Web.Infrastructure.Framework.Security
     {
         public TimeSpan TokenDuration { get; set; }
         public string SecredKey { get; set; }
+        public string Issuer { get; set; }
     }
 }

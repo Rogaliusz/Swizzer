@@ -15,6 +15,7 @@ namespace Swizzer.Web.Infrastructure.Mappers
                 .SingleInstance();
 
             builder.RegisterType<SwizzerMapper>()
+                .As<ISwizzerMapper>()
                 .SingleInstance();
         }
     }

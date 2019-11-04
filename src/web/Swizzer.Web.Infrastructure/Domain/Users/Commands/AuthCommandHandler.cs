@@ -53,7 +53,7 @@ namespace Swizzer.Web.Infrastructure.Domain.Users.Commands
         public async Task HandleAsync(UserLoginCommand command)
         {
             var user = await _swizzerContext.Users.FirstOrDefaultAsync(x => x.Email == command.Email);
-            if (user != null)
+            if (user == null)
             {
                 throw new SwizzerServerException(ServerErrorCodes.InvalidParamter, $"User with email {command.Email} not exists");
             }

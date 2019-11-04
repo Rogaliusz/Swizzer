@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
@@ -83,20 +84,49 @@ namespace Swizzer.Web.Infrastructure.Services
 
         public JwtDto GetJwt(UserDto user)
         {
-            var expiresAt = DateTime.UtcNow + _securitySettings.TokenDuration;
-            var signCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_securitySettings.SecredKey)), SecurityAlgorithms.HmacSha256);
-            var jwt = new JwtSecurityToken(
-                signingCredentials: signCredentials,
-                expires: expiresAt
-            );
-
-            var token = new JwtSecurityTokenHandler().WriteToken(jwt);
+            var now = DateTime.UtcNow;
+            var key = Encoding.ASCII.GetBytes(_securitySettings.SecredKey);
+            var expiresAt = now + _securitySettings.TokenDuration;
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.Name, user.Id.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                    new Claim(JwtRegisteredClaimNames.UniqueName, user.Id.ToString()),
+                    new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                    new Claim(JwtRegisteredClaimNames.Iat, now.ToTimestamp().ToString(), ClaimValueTypes.Integer64),
+                 }),
+                Expires = expiresAt,
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
             return new JwtDto
             {
                 Expires = expiresAt,
                 User = user,
-                Token = token
+                Token = tokenHandler.WriteToken(token)
             };
+
+            var signCredentials = new SigningCredentials(
+    new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
+
+            var claims = new List<Claim> 
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
+                new Claim(JwtRegisteredClaimNames.Iat, now.ToTimestamp().ToString(), ClaimValueTypes.Integer64),
+            };
+
+            var jwt = new JwtSecurityToken(
+                signingCredentials: signCredentials,
+                issuer: _securitySettings.Issuer,
+                notBefore: now,
+                expires: expiresAt,
+                claims: claims
+            );
         }
     }
 }

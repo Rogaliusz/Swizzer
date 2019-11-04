@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swizzer.Shared.Common.Domain.Users.Commands;
 using Swizzer.Shared.Common.Domain.Users.Dto;
@@ -13,9 +14,10 @@ using Swizzer.Web.Infrastructure.Framework;
 
 namespace Swizzer.Web.Api.Controllers
 {
-    public class UsersControllers : SwizzerControllerApi
+
+    public class UsersController : SwizzerControllerApi
     {
-        public UsersControllers(ICacheService cacheService, IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher) : base(cacheService, queryDispatcher, commandDispatcher)
+        public UsersController(ICacheService cacheService, IQueryDispatcher queryDispatcher, ICommandDispatcher commandDispatcher) : base(cacheService, queryDispatcher, commandDispatcher)
         {
         }
 
@@ -24,7 +26,7 @@ namespace Swizzer.Web.Api.Controllers
         {
             await DispatchCommandAsync(command);
             var jwt = GetCachedObject<JwtDto>(command.Id);
-            return Json(jwt);
+            return Ok(jwt);
         }
 
         [HttpPost]
@@ -36,18 +38,19 @@ namespace Swizzer.Web.Api.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetUserAsync(Guid id)
         {
             var query = new GetUserQuery { Id = id };
             var user = await DispatchQueryAsync<GetUserQuery, UserDto>(query);
-            return Json(user);
+            return Ok(user);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsersAsync(GetUsersQuery query)
+        public async Task<IActionResult> GetUsersAsync([FromQuery] GetUsersQuery query)
         {
             var users = await DispatchQueryAsync<GetUsersQuery, PaginationDto<UserDto>>(query);
-            return Json(users);
+            return Ok(users);
         }
 
     }

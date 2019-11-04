@@ -21,10 +21,12 @@ namespace Swizzer.Web.Infrastructure.IoC.Modules
                 .AsClosedTypesOf(typeof(IQueryHandler<,>))
                 .InstancePerLifetimeScope();
 
-            builder.RegisterType<ICommandDispatcher>()
+            builder.RegisterType<CommandDispatcher>()
+                .As<ICommandDispatcher>()
                 .InstancePerLifetimeScope();
 
-            builder.RegisterType<IQueryDispatcher>()
+            builder.RegisterType<QueryDispatcher>()
+                .As<IQueryDispatcher>()
                 .InstancePerLifetimeScope();
         }
     }
