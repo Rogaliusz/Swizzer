@@ -15,25 +15,27 @@ using System.Threading.Tasks;
 using Swizzer.Shared.Common.Extensions;
 using Swizzer.Shared.Common.Domain.Users.Commands;
 using Swizzer.Shared.Common.Domain.Users.Dto;
+using Microsoft.AspNetCore.SignalR.Client;
+using Swizzer.Shared.Common.Hubs;
 
 namespace Swizzer.Tests.Web.Integration.Fixtures
 {
     public class BackendFixture
     {
         public HttpClient Client { get; }
-
+        private WebApplicationFactory<Startup> _webApplicationFactory;
         private string _bearerFormat = "Bearer {0}";
         private string _token;
 
         public BackendFixture()
         {
-            var webApplicationFactory = new WebApplicationFactory<Startup>()
+            _webApplicationFactory = new WebApplicationFactory<Startup>()
                 .WithWebHostBuilder(webHost =>
             {
                 webHost.ConfigureServices(x => x.AddAutofac());
             });
 
-            Client = webApplicationFactory.CreateClient();
+            Client = _webApplicationFactory.CreateClient();
         }
 
         public async Task LoginAsync(string username, string password)
@@ -71,6 +73,20 @@ namespace Swizzer.Tests.Web.Integration.Fixtures
             httpResponseMessage.IsSuccessStatusCode.Should().BeTrue(responseString);
 
             return SwizzerJsonSerializer.Deserialize<TResponse>(responseString);
+        }
+
+        public HubConnection CreateHubConnection()
+        {
+            var connection = new HubConnectionBuilder()
+              
+              .WithUrl(new Uri(Client.BaseAddress, Channels.ChatChannel), opt =>
+              {
+                  opt.Headers.Add("Authorization", "Bearer " + _token);
+                  opt.HttpMessageHandlerFactory = _ => _webApplicationFactory.Server.CreateHandler();
+              })
+              .Build();
+
+            return connection;
         }
     }
 }

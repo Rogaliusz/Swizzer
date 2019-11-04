@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Swizzer.Shared.Common.Hubs;
+using Swizzer.Web.Api.Hubs;
 using Swizzer.Web.Api.Middlewares;
 using Swizzer.Web.Infrastructure.Framework.Security;
 using Swizzer.Web.Infrastructure.IoC;
@@ -37,6 +39,7 @@ namespace Swizzer.Web.Api
         {
             services.AddControllers();
             services.AddTransient<ExceptionMiddleware>();
+            services.AddSignalR();
             services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -89,6 +92,7 @@ namespace Swizzer.Web.Api
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<ChatHub>($"/{Channels.ChatChannel}");
             });
         }
     }
