@@ -13,6 +13,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swizzer.Tests.Web.Integrati
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swizzer.Web.Api", "src\web\Swizzer.Web.Api\Swizzer.Web.Api.csproj", "{F2AA1795-2C64-4893-A98D-9C66528B438C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shared", "shared", "{6656985F-80BD-4D77-9368-75643F39D2A3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "web", "web", "{08DAB0F4-8CD2-4D00-AA11-667DB736236A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "client", "client", "{F593AD09-2340-4987-8259-28AFD6219A16}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swizzer.Client", "src\client\Swizzer.Client\Swizzer.Client.csproj", "{9488525D-B590-4B2B-80F0-1EC57259A463}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swizzer.Client.Windows", "src\client\Swizzer.Client.Windows\Swizzer.Client.Windows.csproj", "{29A8CFF4-17C4-4CAE-8871-D69BC3C4EC52}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,12 +45,25 @@ Global
 		{F2AA1795-2C64-4893-A98D-9C66528B438C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2AA1795-2C64-4893-A98D-9C66528B438C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2AA1795-2C64-4893-A98D-9C66528B438C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9488525D-B590-4B2B-80F0-1EC57259A463}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9488525D-B590-4B2B-80F0-1EC57259A463}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9488525D-B590-4B2B-80F0-1EC57259A463}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9488525D-B590-4B2B-80F0-1EC57259A463}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29A8CFF4-17C4-4CAE-8871-D69BC3C4EC52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29A8CFF4-17C4-4CAE-8871-D69BC3C4EC52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29A8CFF4-17C4-4CAE-8871-D69BC3C4EC52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29A8CFF4-17C4-4CAE-8871-D69BC3C4EC52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{C23B4F87-FC6A-498E-9EBA-3269393E338A} = {08DAB0F4-8CD2-4D00-AA11-667DB736236A}
+		{3D6F4CAB-3F26-4FFE-90C2-541C73917E25} = {6656985F-80BD-4D77-9368-75643F39D2A3}
 		{DD855D03-F1CA-47E6-96F7-D0D25F57B7DE} = {8B1A97AA-77E9-4DAE-BA01-0412F2A3C430}
+		{F2AA1795-2C64-4893-A98D-9C66528B438C} = {08DAB0F4-8CD2-4D00-AA11-667DB736236A}
+		{9488525D-B590-4B2B-80F0-1EC57259A463} = {F593AD09-2340-4987-8259-28AFD6219A16}
+		{29A8CFF4-17C4-4CAE-8871-D69BC3C4EC52} = {F593AD09-2340-4987-8259-28AFD6219A16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A75CF96F-F9E0-44F9-9107-486CF007EF3C}

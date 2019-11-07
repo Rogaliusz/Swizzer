@@ -88,7 +88,6 @@ namespace Swizzer.Tests.Web.Integration.Tests
 
             connection2.On(Channels.Chat.Messages, new[] { typeof(CreateMessageCommand)}, async (p1, p2) =>
             {
-                
                 tcs.SetResult(p1[0] as CreateMessageCommand);
             },
             new object());

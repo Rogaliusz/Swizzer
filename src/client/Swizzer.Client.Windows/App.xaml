@@ -1,0 +1,46 @@
+﻿<prism:PrismApplication x:Class="Swizzer.Client.Windows.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:Swizzer.Client.Windows"
+             xmlns:prism="http://prismlibrary.com/"
+             StartupUri="MainWindow.xaml">
+    <prism:PrismApplication.Resources>
+        
+        <SolidColorBrush x:Key="Primary" Color="Bisque" />
+        <SolidColorBrush x:Key="Accent" Color="BurlyWood" />
+        <LinearGradientBrush x:Key="Background" ColorInterpolationMode="ScRgbLinearInterpolation" Opacity="1">
+            <GradientStop Color="Yellow" Offset="0.0" />
+            <GradientStop Color="Red" Offset="0.25" />
+            <GradientStop Color="Blue" Offset="0.75" />
+            <GradientStop Color="LimeGreen" Offset="1.0" />
+        </LinearGradientBrush>
+        <SolidColorBrush x:Key="Foreground" Color="White" />
+        <SolidColorBrush x:Key="Error" Color="MediumVioletRed" />
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="{StaticResource Accent}" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Foreground" Value="{StaticResource Foreground}" />
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="{StaticResource Foreground}"/>
+        </Style>
+
+        <Style TargetType="Label" x:Key="ErrorLabel">
+            <Setter Property="Foreground" Value="{StaticResource Error}"/>
+        </Style>
+
+        <Style TargetType="TextBox">    
+            <Setter Property="Height" Value="30" />
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+
+        <Style TargetType="PasswordBox">
+            <Setter Property="Height" Value="30" />
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+    </prism:PrismApplication.Resources>
+</prism:PrismApplication>
