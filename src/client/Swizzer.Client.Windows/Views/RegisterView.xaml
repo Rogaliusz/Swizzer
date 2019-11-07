@@ -15,6 +15,14 @@
             <TextBox Text="{Binding Email}"></TextBox>
         </StackPanel>
         <StackPanel>
+            <Label>Name</Label>
+            <TextBox Text="{Binding Name}"></TextBox>
+        </StackPanel>
+        <StackPanel>
+            <Label>Surname</Label>
+            <TextBox Text="{Binding Surname}"></TextBox>
+        </StackPanel>
+        <StackPanel>
             <Label>Password</Label>
             <PasswordBox ff:PasswordBoxAssistant.BindPassword="true" ff:PasswordBoxAssistant.BoundPassword="{Binding Path=Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ></PasswordBox>
         </StackPanel>

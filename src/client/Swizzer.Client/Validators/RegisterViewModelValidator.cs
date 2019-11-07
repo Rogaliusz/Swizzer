@@ -16,6 +16,14 @@ namespace Swizzer.Client.Validators
                 .EmailAddress()
                 .WithMessage(string.Format(ValidatorMessages.HasInvalidFormat, nameof(RegisterViewModel.Email)));
 
+            RuleFor(x => x.Name)
+                .NotEmpty()
+                .WithMessage(string.Format(ValidatorMessages.Required, nameof(RegisterViewModel.Name)));
+
+            RuleFor(x => x.Surname)
+                .NotEmpty()
+                .WithMessage(string.Format(ValidatorMessages.Required, nameof(RegisterViewModel.Surname)));
+
             RuleFor(x => x.Password)
                 .NotEmpty()
                 .WithMessage(string.Format(ValidatorMessages.Required, nameof(RegisterViewModel.Password)))

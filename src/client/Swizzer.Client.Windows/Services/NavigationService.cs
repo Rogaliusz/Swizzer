@@ -1,24 +1,29 @@
 ﻿using Prism.Mvvm;
 using Prism.Regions;
 using Swizzer.Client.Services;
+using Swizzer.Client.ViewModels;
 using Swizzer.Client.Windows.Views;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
 
 namespace Swizzer.Client.Windows
 {
     public class NavigationService : INavigationService
     {
         private readonly static IDictionary<Type, Type> _bindedViews = new Dictionary<Type, Type>();
-
+        private readonly IRegionNavigationService _navigationService;
         private readonly IRegionManager _regionManager;
         private readonly Stack<Type> _views = new Stack<Type>();
 
         private Type _currentView;
 
-        public NavigationService(IRegionManager regionManager)
+        public NavigationService(
+            IRegionManager regionManager)
         {
             this._regionManager = regionManager;
 
@@ -46,7 +51,23 @@ namespace Swizzer.Client.Windows
                 { "value", parameter }
             };
 
-            _regionManager.RequestNavigate("ContentRegion", viewType.Name, parameters);
+            _regionManager.RequestNavigate("ContentRegion", viewType.Name, x => navigationCallback(x, viewType), parameters);
+        }
+
+        private void navigationCallback(NavigationResult obj, Type viewType)
+        {
+            var viewInstance = obj.Context.NavigationService.Region.ActiveViews.FirstOrDefault(x => x.GetType() == viewType);
+            var dataContext = viewInstance.GetType().GetProperty(nameof(ContentControl.DataContext)).GetValue(viewInstance);
+            var viewModelBase = dataContext as ViewModelBase;
+
+            if (viewModelBase == null)
+            {
+                return;
+            }
+
+            obj.Context.Parameters.TryGetValue<object>("value", out var parameter);
+
+            viewModelBase.InitializeAsync(parameter);
         }
 
         public Task GoToAsync(string url, object parameter = null)

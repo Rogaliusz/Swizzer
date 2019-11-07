@@ -9,7 +9,7 @@ namespace Swizzer.Shared.Common.Domain.Users.Commands
         ICommandProvider,
         IIdProvider
     {
-        public Guid Id { get; set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Email { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }

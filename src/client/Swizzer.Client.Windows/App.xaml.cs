@@ -8,10 +8,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Swizzer.Client.Windows.Views;
-using Prism.Mvvm;
 using Swizzer.Client.ViewModels;
 using Swizzer.Client.Services;
 using Swizzer.Client.Validators;
+using Swizzer.Client.Cqrs;
+using Swizzer.Client.Cqrs.Queries;
+using Swizzer.Client.Web.Api;
+using Swizzer.Client.Domain.Users;
+using Swizzer.Client.Mapper;
+using AutoMapper;
 
 namespace Swizzer.Client.Windows
 {
@@ -33,6 +38,39 @@ namespace Swizzer.Client.Windows
             containerRegistry.RegisterForNavigation<LoginViewModel>();
 
             containerRegistry.Register<RegisterViewModelValidator>();
+
+            containerRegistry.Register<ICommandDispatcher, CommandDispatcher>();
+            containerRegistry.Register<IQueryDispatcher, QueryDispatcher>();
+
+            RegisterInterfaces(typeof(ICommandHandler), containerRegistry);
+
+            containerRegistry.RegisterSingleton<ApiHttpWebService>();
+            containerRegistry.RegisterSingleton<ApiSettings>();
+            containerRegistry.RegisterSingleton<ICurrentUserContext, CurrentUserContext>();
+
+            var mapper = SwizzerMapperConfiguration.Initialize();
+            containerRegistry.RegisterInstance<IMapper>(mapper);
+
+            containerRegistry.RegisterSingleton<ISwizzerMapper, SwizzerMapper>();
+
+            containerRegistry.RegisterInstance<IContainerProvider>(Container);
+        }
+
+        private void RegisterInterfaces(Type type, IContainerRegistry containerRegistry)
+        {
+            var types = AppDomain.CurrentDomain.GetAssemblies()
+                .SelectMany(x => x.GetTypes())
+                .Where(x => type.IsAssignableFrom(x));
+
+            foreach (var impType in types)
+            {
+                var interfaces = impType.GetInterfaces();
+                foreach (var @interface in interfaces)
+                {
+                    containerRegistry.Register(@interface, impType);
+                }
+            }
+
         }
 
         protected override void ConfigureViewModelLocator()
@@ -41,6 +79,8 @@ namespace Swizzer.Client.Windows
 
             NavigationService.RegisterViewModel<LoginViewModel, LoginView>();
             NavigationService.RegisterViewModel<RegisterViewModel, RegisterView>();
+            NavigationService.RegisterViewModel<MainViewModel, MainWindow>();
+            NavigationService.RegisterViewModel<ChatViewModel, ChatView>();
         }
     }
 }
