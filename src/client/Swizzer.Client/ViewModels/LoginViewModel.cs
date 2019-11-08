@@ -28,12 +28,7 @@ namespace Swizzer.Client.ViewModels
 
         public LoginViewModel(
             INavigationService navigationService,
-            IQueryDispatcher queryDispatcher,
-            ICommandDispatcher commandDispatcher,
-            ISwizzerMapper swizzerMapper) : base (
-                queryDispatcher, 
-                commandDispatcher, 
-                swizzerMapper)
+            IViewModelFacade viewModelFacade) : base(viewModelFacade)
         {
             LoginCommand = new DelegateCommand(Submit, CanSubmit);
             GoToRegisterCommand = new DelegateCommand(GoToRegister, CanRegister);

@@ -32,19 +32,27 @@ namespace Swizzer.Client.Windows
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            AppDomain.CurrentDomain.UnhandledException += HandleUnexpectedException;
+
             containerRegistry.Register<INavigationService, NavigationService>();
 
             containerRegistry.RegisterForNavigation<RegisterView>();
-            containerRegistry.RegisterForNavigation<LoginViewModel>();
+            containerRegistry.RegisterForNavigation<RegisterView>();
+            containerRegistry.RegisterForNavigation<LoginView>();
+            containerRegistry.RegisterForNavigation<ChatView>();
 
             containerRegistry.Register<RegisterViewModelValidator>();
+            containerRegistry.Register<IViewModelFacade, ViewModelFacade>();
 
             containerRegistry.Register<ICommandDispatcher, CommandDispatcher>();
             containerRegistry.Register<IQueryDispatcher, QueryDispatcher>();
+            containerRegistry.Register<IApiHubWebServiceFacade, ApiHubWebServiceFacade>();
 
             RegisterInterfaces(typeof(ICommandHandler), containerRegistry);
+            RegisterInterfaces(typeof(IQueryHandler), containerRegistry);
 
-            containerRegistry.RegisterSingleton<ApiHttpWebService>();
+            containerRegistry.RegisterSingleton<IApiHttpWebService, ApiHttpWebService>();
+            containerRegistry.RegisterSingleton<MessageApiHubWebService>();
             containerRegistry.RegisterSingleton<ApiSettings>();
             containerRegistry.RegisterSingleton<ICurrentUserContext, CurrentUserContext>();
 
@@ -54,6 +62,11 @@ namespace Swizzer.Client.Windows
             containerRegistry.RegisterSingleton<ISwizzerMapper, SwizzerMapper>();
 
             containerRegistry.RegisterInstance<IContainerProvider>(Container);
+        }
+
+        private void HandleUnexpectedException(object sender, UnhandledExceptionEventArgs e)
+        {
+            Console.WriteLine(e);
         }
 
         private void RegisterInterfaces(Type type, IContainerRegistry containerRegistry)
@@ -79,8 +92,8 @@ namespace Swizzer.Client.Windows
 
             NavigationService.RegisterViewModel<LoginViewModel, LoginView>();
             NavigationService.RegisterViewModel<RegisterViewModel, RegisterView>();
-            NavigationService.RegisterViewModel<MainViewModel, MainWindow>();
             NavigationService.RegisterViewModel<ChatViewModel, ChatView>();
+            NavigationService.RegisterViewModel<MainViewModel, MainWindow>();
         }
     }
 }

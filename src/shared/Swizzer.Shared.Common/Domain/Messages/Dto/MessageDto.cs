@@ -14,6 +14,9 @@ namespace Swizzer.Shared.Common.Domain.Messages.Dto
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
 
+        public Guid User1Id { get; set; }
+        public Guid User2Id { get; set; }
+
         public UserDto User1 { get; set; }
         public UserDto User2 { get; set; }
     }

@@ -20,12 +20,7 @@ namespace Swizzer.Client.ViewModels
         public MainViewModel(
             INavigationService navigationService,
             IEventAggregator eventAggregator,
-            IQueryDispatcher queryDispatcher, 
-            ICommandDispatcher commandDispatcher, 
-            ISwizzerMapper swizzerMapper) 
-            : base(queryDispatcher, 
-                  commandDispatcher, 
-                  swizzerMapper)
+            IViewModelFacade viewModelFacade) : base(viewModelFacade)
         {
             this._navigationService = navigationService;
             this._eventAggregator = eventAggregator;
@@ -36,6 +31,13 @@ namespace Swizzer.Client.ViewModels
         private async void GoToChatAsync()
         {
             await _navigationService.GoToAsync<ChatViewModel>();
+        }
+
+        public override async Task InitializeAsync(object parameter = null)
+        {
+            await base.InitializeAsync(parameter);
+
+            await _navigationService.GoToAsync<LoginViewModel>();
         }
     }
 }

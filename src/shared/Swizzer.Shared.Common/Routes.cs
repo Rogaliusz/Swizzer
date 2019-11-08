@@ -12,5 +12,10 @@ namespace Swizzer.Shared.Common
             public const string Main = Api + "users/";
             public const string Login = Main + "login/";
         }
+
+        public static class Messages
+        {
+            public const string Main = Api + "messages/";
+        }
     }
 }

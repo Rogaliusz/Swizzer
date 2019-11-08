@@ -45,6 +45,11 @@ namespace Swizzer.Web.Api.Hubs
             {
                 await Clients.Client(_connections[command.Reciever]).SendAsync(Channels.Chat.Messages, command);
             }
+
+            if (_connections.ContainsKey(command.RequestBy))
+            {
+                await Clients.Client(_connections[command.RequestBy]).SendAsync(Channels.Chat.Messages, command);
+            }
         }
     }
 }

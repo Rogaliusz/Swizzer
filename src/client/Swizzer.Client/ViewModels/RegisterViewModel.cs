@@ -39,12 +39,7 @@ namespace Swizzer.Client.ViewModels
 
         public RegisterViewModel(INavigationService navigationService,
             RegisterViewModelValidator registerViewModelValidator,
-            IQueryDispatcher queryDispatcher,
-            ICommandDispatcher commandDispatcher,
-            ISwizzerMapper swizzerMapper) : base(
-                queryDispatcher,
-                commandDispatcher,
-                swizzerMapper)
+            IViewModelFacade viewModelFacade) : base(viewModelFacade)
         {
             this._navigationService = navigationService;
             this._registerViewModelValidator = registerViewModelValidator;

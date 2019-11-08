@@ -1,4 +1,5 @@
 ﻿using Swizzer.Shared.Common.Exceptions;
+using Swizzer.Shared.Common.Extensions;
 using Swizzer.Shared.Common.Framework;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,11 @@ namespace Swizzer.Client.Web.Api
                 Method = method,
                 RequestUri = new Uri($"{_apiSettings.Address}{endpoint}")
             };
+
+            if (!_apiSettings.Token.IsEmpty())
+            {
+                webRequest.Headers.Add("Authorization", $"Bearer {_apiSettings.Token}");
+            }
 
             if (body != null)
             {

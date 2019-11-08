@@ -1,4 +1,5 @@
 ﻿using Prism.Regions;
+using Swizzer.Client.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Swizzer.Client.Windows.Views
 {
@@ -18,18 +20,20 @@ namespace Swizzer.Client.Windows.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
+
 
         public MainWindow(IRegionManager regionManager)
         {
             InitializeComponent();
 
-            regionManager.RegisterViewWithRegion("ContentRegion", typeof(LoginView));
-
-
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, new Action(async () =>
+            {
+                var RC = ContentRegion;
+                var vm = DataContext as MainViewModel;
+                await vm.InitializeAsync();
+            }));
         }
+
+
     }
 }

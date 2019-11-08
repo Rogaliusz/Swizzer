@@ -4,24 +4,43 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Swizzer.Client.Windows.Views"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.InputBindings>
+        <KeyBinding Key="Execute" Command="{Binding SendMessageCommand}" />
+    </UserControl.InputBindings>
     <DockPanel>
         <ScrollViewer DockPanel.Dock="Left">
-            <StackPanel Background="{StaticResource Background}">
+            <StackPanel Background="{StaticResource Primary}">
                 <StackPanel>
                     <Label Content="{Binding UserName}" />
                 </StackPanel>
-                <ListBox ItemsSource="{Binding Users}">
-                    
+                <ListBox ItemsSource="{Binding Users}" Background="{StaticResource Primary}" SelectedItem="{Binding CurrentReciever}" >
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" VerticalAlignment="Stretch">
+                                <Label Content="{Binding ., Converter={StaticResource UserDisplayConverter}}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                 </ListBox>
             </StackPanel>
         </ScrollViewer>
-        <DockPanel>
-            <ListBox ItemsSource="{Binding Messages}">
+        <DockPanel DockPanel.Dock="Right">
+            <ListBox HorizontalContentAlignment="Stretch" DockPanel.Dock="Top" Background="{StaticResource Background}" HorizontalAlignment="Stretch" ItemsSource="{Binding Messages}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel VerticalAlignment="Stretch" Background="Wheat">
+                            <TextBlock Foreground="Black" Text="{Binding Content}" />
+                            <Label Foreground="Black" Content="{Binding CreatedAt}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
             </ListBox>
-            <StackPanel DockPanel.Dock="Bottom">
-                <TextBox Text="{Binding CurrentMessage}" >
+            <StackPanel DockPanel.Dock="Right">
+                <TextBox Text="{Binding MessageContent}" >
                 </TextBox>
                 <Button Command="{Binding SendMessageCommand}">
                     Send

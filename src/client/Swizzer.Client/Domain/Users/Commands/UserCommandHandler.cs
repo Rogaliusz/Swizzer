@@ -22,14 +22,14 @@ namespace Swizzer.Client.Domain.Users
         private readonly ICurrentUserContext _currentUserContext;
         private readonly ISwizzerMapper _mapper;
         private readonly ApiSettings _apiSettings;
-        private readonly ApiHttpWebService _apiHttpWebService;
+        private readonly IApiHttpWebService _apiHttpWebService;
 
         public UserCommandHandler(
             IEventAggregator eventAggregator,
             ICurrentUserContext currentUserContext,
             ISwizzerMapper mapper,
             ApiSettings apiSettings,
-            ApiHttpWebService apiHttpWebService)
+            IApiHttpWebService apiHttpWebService)
         {
             this._eventAggregator = eventAggregator;
             this._currentUserContext = currentUserContext;

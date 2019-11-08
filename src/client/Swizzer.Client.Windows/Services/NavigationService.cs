@@ -1,4 +1,5 @@
-﻿using Prism.Mvvm;
+﻿using Prism.Ioc;
+using Prism.Mvvm;
 using Prism.Regions;
 using Swizzer.Client.Services;
 using Swizzer.Client.ViewModels;
@@ -17,14 +18,17 @@ namespace Swizzer.Client.Windows
     {
         private readonly static IDictionary<Type, Type> _bindedViews = new Dictionary<Type, Type>();
         private readonly IRegionNavigationService _navigationService;
+        private readonly IContainerExtension _container;
         private readonly IRegionManager _regionManager;
         private readonly Stack<Type> _views = new Stack<Type>();
 
         private Type _currentView;
 
         public NavigationService(
+            IContainerExtension container,
             IRegionManager regionManager)
         {
+            this._container = container;
             this._regionManager = regionManager;
 
             _currentView = typeof(LoginView);
@@ -50,6 +54,12 @@ namespace Swizzer.Client.Windows
             {
                 { "value", parameter }
             };
+
+            if (_regionManager.Regions["ContentRegion"].Views.Any(x => x.GetType() != viewType))
+            {
+                var view = _container.Resolve(viewType);
+                _regionManager.Regions["ContentRegion"].Add(view);
+            }
 
             _regionManager.RequestNavigate("ContentRegion", viewType.Name, x => navigationCallback(x, viewType), parameters);
         }

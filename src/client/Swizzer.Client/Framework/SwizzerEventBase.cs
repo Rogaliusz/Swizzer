@@ -8,4 +8,8 @@ namespace Swizzer.Client.Framework
     public class SwizzerEventBase : PubSubEvent
     {
     }
+
+    public class SwizzerEventBase<TMessage> : PubSubEvent<TMessage>
+    {
+    }
 }

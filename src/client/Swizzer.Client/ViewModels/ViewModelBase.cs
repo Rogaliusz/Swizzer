@@ -12,22 +12,15 @@ namespace Swizzer.Client.ViewModels
 {
     public abstract class ViewModelBase : BindableBase
     {
-        private readonly IQueryDispatcher _queryDispatcher;
-        private readonly ICommandDispatcher _commandDispatcher;
-        private readonly ISwizzerMapper _swizzerMapper;
-
+        private readonly IViewModelFacade _facade;
         private bool _isRunning;
         
         public bool IsRunning { get => _isRunning; set => SetProperty(ref _isRunning, value); }
 
         public ViewModelBase(
-            IQueryDispatcher queryDispatcher,
-            ICommandDispatcher commandDispatcher,
-            ISwizzerMapper swizzerMapper)
+            IViewModelFacade viewModelFacade)
         {
-            this._queryDispatcher = queryDispatcher;
-            this._commandDispatcher = commandDispatcher;
-            this._swizzerMapper = swizzerMapper;
+            this._facade = viewModelFacade;
         }
 
         protected async Task DispatchCommandAsync<TCommand>(TCommand command)
@@ -35,14 +28,33 @@ namespace Swizzer.Client.ViewModels
         {
             IsRunning = true;
 
-            await _commandDispatcher.DispatchAsync(command);
+            await _facade.CommandDispatcher.DispatchAsync(command);
 
             IsRunning = false;
         }
 
+        protected async Task<TResult> DispatchQueryAsync<TQuery, TResult>(TQuery query)
+            where TQuery : IQueryProvider
+        {
+            try
+            {
+                IsRunning = true;
+
+                var items = await _facade.QueryDispatcher.DispatchAsync<TQuery, TResult>(query);
+
+                IsRunning = false;
+
+                return items;
+            } 
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         protected TDesc MapTo<TDesc>(object source)
         {
-            return _swizzerMapper.MapTo<TDesc>(source);
+            return _facade.SwizzerMapper.MapTo<TDesc>(source);
         }
 
         public virtual async Task InitializeAsync(object parameter = null)
