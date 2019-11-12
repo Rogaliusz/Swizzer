@@ -5,7 +5,7 @@ WORKDIR /app
 COPY . ./
 RUN ls
 RUN pwd
-RUN dotnet publish src/web/Swizzer.Web.Api -c Release -o out
+RUN dotnet publish web/Swizzer.Web.Api -c Release -o out
 
 # build runtime image
 FROM microsoft/dotnet:3.0-runtime 
