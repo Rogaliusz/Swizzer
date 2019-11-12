@@ -26,10 +26,9 @@ namespace Swizzer.Web.Infrastructure.Domain.Messages.Commands
         public async Task HandleAsync(CreateMessageCommand command)
         {
             var message = _swizzerMapper.MapTo<Message>(command);
-            var ids = (new[] { command.RequestBy, command.Reciever }).OrderBy(x => x).ToList();
-
-            message.ReceiverId = ids.First();
-            message.RecipientId = ids.First(x => x != message.ReceiverId);
+            
+            message.ReceiverId = command.Receiver;
+            message.SenderId = command.RequestBy;
 
             await  _context.AddAsync(message);
         }

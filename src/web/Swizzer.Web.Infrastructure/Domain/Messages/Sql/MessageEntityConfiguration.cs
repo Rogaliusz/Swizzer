@@ -17,9 +17,9 @@ namespace Swizzer.Web.Infrastructure.Domain.Messages.Sql
                 .WithMany(x => x.Messages1)
                 .HasForeignKey(x => x.ReceiverId);
 
-            builder.HasOne(x => x.Recipient)
+            builder.HasOne(x => x.Sender)
                 .WithMany(x => x.Messages2)
-                .HasForeignKey(x => x.RecipientId);
+                .HasForeignKey(x => x.SenderId);
         }
     }
 }

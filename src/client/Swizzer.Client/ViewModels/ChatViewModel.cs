@@ -113,11 +113,11 @@ namespace Swizzer.Client.ViewModels
             if (obj.ReceiverId == CurrentReciever?.Id)
             {
                 obj.Receiver = CurrentReciever;
-                obj.Recipient = _currentUserContext.CurrentUser;
+                obj.Sender = _currentUserContext.CurrentUser;
             }
-            else if (obj.RecipientId == CurrentReciever?.Id)
+            else if (obj.SenderId == CurrentReciever?.Id)
             {
-                obj.Recipient = CurrentReciever;
+                obj.Sender = CurrentReciever;
                 obj.Receiver = _currentUserContext.CurrentUser;
             }
         }

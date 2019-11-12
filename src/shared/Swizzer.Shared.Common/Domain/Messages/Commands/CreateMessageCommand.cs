@@ -9,8 +9,8 @@ namespace Swizzer.Shared.Common.Domain.Messages.Commands
     {
         public Guid Id { get; set; }
         public string Content { get; set; }
-        public Guid Reciever { get; set; }
+        public Guid Receiver { get; set; }
         public Guid RequestBy { get; set; }
-        public DateTime CreatedAt {get;set;}
+        public DateTime CreatedAt { get; set; }
     }
 }

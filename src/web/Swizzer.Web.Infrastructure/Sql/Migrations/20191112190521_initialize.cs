@@ -32,7 +32,7 @@ namespace Swizzer.Web.Infrastructure.Sql.Migrations
                     Content = table.Column<string>(nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
                     ReceiverId = table.Column<Guid>(nullable: false),
-                    RecipientId = table.Column<Guid>(nullable: false)
+                    SenderId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,8 +44,8 @@ namespace Swizzer.Web.Infrastructure.Sql.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Messages_Users_RecipientId",
-                        column: x => x.RecipientId,
+                        name: "FK_Messages_Users_SenderId",
+                        column: x => x.SenderId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -138,9 +138,9 @@ namespace Swizzer.Web.Infrastructure.Sql.Migrations
                 column: "ReceiverId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_RecipientId",
+                name: "IX_Messages_SenderId",
                 table: "Messages",
-                column: "RecipientId");
+                column: "SenderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Posts_AuthorId",

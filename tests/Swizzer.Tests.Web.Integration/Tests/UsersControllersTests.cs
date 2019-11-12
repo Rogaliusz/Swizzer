@@ -76,7 +76,7 @@ namespace Swizzer.Tests.Web.Integration.Tests
             {
                 Id = Guid.NewGuid(),
                 Content = "Mario bross",
-                Reciever = new Guid("6759d0df-9838-4641-b332-f251b05fcd44")
+                Receiver = new Guid("6759d0df-9838-4641-b332-f251b05fcd44")
             };
 
             await _backendFixture.LoginAsync(command2.Email, command2.Password);
@@ -99,7 +99,7 @@ namespace Swizzer.Tests.Web.Integration.Tests
 
             tcs.Task.Result.Id.Should().Be(message.Id);
             tcs.Task.Result.Content.Should().Be(message.Content);
-            tcs.Task.Result.Reciever.Should().Be(message.Reciever);
+            tcs.Task.Result.Receiver.Should().Be(message.Receiver);
         }
     }
 }

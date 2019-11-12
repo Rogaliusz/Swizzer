@@ -15,9 +15,9 @@ namespace Swizzer.Shared.Common.Domain.Messages.Dto
         public DateTime CreatedAt { get; set; }
 
         public Guid ReceiverId { get; set; }
-        public Guid RecipientId { get; set; }
+        public Guid SenderId { get; set; }
 
         public UserDto Receiver { get; set; }
-        public UserDto Recipient { get; set; }
+        public UserDto Sender { get; set; }
     }
 }

@@ -10,7 +10,7 @@ using Swizzer.Web.Infrastructure.Sql;
 namespace Swizzer.Web.Infrastructure.Sql.Migrations
 {
     [DbContext(typeof(SwizzerContext))]
-    [Migration("20191112181815_initialize")]
+    [Migration("20191112190521_initialize")]
     partial class initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -36,14 +36,14 @@ namespace Swizzer.Web.Infrastructure.Sql.Migrations
                     b.Property<Guid>("ReceiverId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("RecipientId")
+                    b.Property<Guid>("SenderId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ReceiverId");
 
-                    b.HasIndex("RecipientId");
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
                 });
@@ -153,9 +153,9 @@ namespace Swizzer.Web.Infrastructure.Sql.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Swizzer.Web.Infrastructure.Domain.Users.Models.User", "Recipient")
+                    b.HasOne("Swizzer.Web.Infrastructure.Domain.Users.Models.User", "Sender")
                         .WithMany("Messages2")
-                        .HasForeignKey("RecipientId")
+                        .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

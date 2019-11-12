@@ -15,9 +15,9 @@ namespace Swizzer.Web.Infrastructure.Domain.Messages.Models
         public DateTime CreatedAt { get; set; }
 
         public Guid ReceiverId { get; set; }
-        public Guid RecipientId { get; set; }
+        public Guid SenderId { get; set; }
 
         public User Receiver { get; set; }
-        public User Recipient { get; set; }
+        public User Sender { get; set; }
     }
 }

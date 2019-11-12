@@ -41,9 +41,9 @@ namespace Swizzer.Web.Api.Hubs
 
             command.CreatedAt = DateTime.UtcNow;
 
-            if (_connections.ContainsKey(command.Reciever))
+            if (_connections.ContainsKey(command.Receiver))
             {
-                await Clients.Client(_connections[command.Reciever]).SendAsync(Channels.Chat.Messages, command);
+                await Clients.Client(_connections[command.Receiver]).SendAsync(Channels.Chat.Messages, command);
             }
 
             if (_connections.ContainsKey(command.RequestBy))

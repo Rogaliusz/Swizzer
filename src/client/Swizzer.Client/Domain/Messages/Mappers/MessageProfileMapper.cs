@@ -14,14 +14,14 @@ namespace Swizzer.Client.Domain.Messages.Mappers
         {
             CreateMap<ChatViewModel, CreateMessageCommand>()
                 .ForMember(x => x.Content, opt => opt.MapFrom(src => src.MessageContent))
-                .ForMember(x => x.Reciever, opt => opt.MapFrom(src => src.CurrentReciever.Id));
+                .ForMember(x => x.Receiver, opt => opt.MapFrom(src => src.CurrentReciever.Id));
 
             CreateMap<CreateMessageCommand, MessageDto>()
-                .ForMember(x => x.ReceiverId, opt => opt.MapFrom(src => src.Reciever))
-                .ForMember(x => x.RecipientId, opt => opt.MapFrom(src => src.RequestBy))
+                .ForMember(x => x.ReceiverId, opt => opt.MapFrom(src => src.Receiver))
+                .ForMember(x => x.SenderId, opt => opt.MapFrom(src => src.RequestBy))
                 .ReverseMap()
-                .ForMember(x => x.Reciever, opt => opt.MapFrom(src => src.ReceiverId))
-                .ForMember(x => x.RequestBy, opt => opt.MapFrom(src => src.RecipientId));
+                .ForMember(x => x.Receiver, opt => opt.MapFrom(src => src.ReceiverId))
+                .ForMember(x => x.RequestBy, opt => opt.MapFrom(src => src.SenderId));
         }
     }
 }

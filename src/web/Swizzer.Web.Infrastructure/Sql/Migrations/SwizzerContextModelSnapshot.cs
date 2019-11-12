@@ -34,14 +34,14 @@ namespace Swizzer.Web.Infrastructure.Sql.Migrations
                     b.Property<Guid>("ReceiverId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("RecipientId")
+                    b.Property<Guid>("SenderId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ReceiverId");
 
-                    b.HasIndex("RecipientId");
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
                 });
@@ -151,9 +151,9 @@ namespace Swizzer.Web.Infrastructure.Sql.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Swizzer.Web.Infrastructure.Domain.Users.Models.User", "Recipient")
+                    b.HasOne("Swizzer.Web.Infrastructure.Domain.Users.Models.User", "Sender")
                         .WithMany("Messages2")
-                        .HasForeignKey("RecipientId")
+                        .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
