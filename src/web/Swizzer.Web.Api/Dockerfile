@@ -5,7 +5,7 @@ WORKDIR /app
 COPY . ./
 RUN ls
 RUN pwd
-RUN dotnet restore
+RUN dotnet restore web/Swizzer.Web.Api/
 RUN dotnet publish web/Swizzer.Web.Api -c Release -o out
 
 # build runtime image
