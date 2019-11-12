@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:3.0-sdk AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0 AS build-env
 WORKDIR /app
 
 # copy everything else and build
@@ -9,7 +9,7 @@ RUN dotnet restore web/Swizzer.Web.Api/
 RUN dotnet publish web/Swizzer.Web.Api -c Release -o out
 
 # build runtime image
-FROM microsoft/dotnet:3.0-runtime 
+FROM mcr.microsoft.com/dotnet/core/runtime:3.0
 WORKDIR /app
 COPY --from=build-env /app/src/web/Swizzer.Web.Api/out/ ./
 
