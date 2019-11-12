@@ -18,7 +18,7 @@ namespace Swizzer.Web.Infrastructure.Services
         JwtDto GetJwt(UserDto user);
         string GetRandomPassword(int length);
         string GetSalt();
-        public string GetHash(string value, string salt);
+        string GetHash(string value, string salt);
     }
     public class SecurityService : ISecurityService
     {
@@ -108,25 +108,6 @@ namespace Swizzer.Web.Infrastructure.Services
                 User = user,
                 Token = tokenHandler.WriteToken(token)
             };
-
-            var signCredentials = new SigningCredentials(
-    new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256);
-
-            var claims = new List<Claim> 
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.UniqueName, user.Id.ToString()),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Iat, now.ToTimestamp().ToString(), ClaimValueTypes.Integer64),
-            };
-
-            var jwt = new JwtSecurityToken(
-                signingCredentials: signCredentials,
-                issuer: _securitySettings.Issuer,
-                notBefore: now,
-                expires: expiresAt,
-                claims: claims
-            );
         }
     }
 }

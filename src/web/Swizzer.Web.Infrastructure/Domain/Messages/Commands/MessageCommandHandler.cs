@@ -28,8 +28,8 @@ namespace Swizzer.Web.Infrastructure.Domain.Messages.Commands
             var message = _swizzerMapper.MapTo<Message>(command);
             var ids = (new[] { command.RequestBy, command.Reciever }).OrderBy(x => x).ToList();
 
-            message.User1Id = ids.First();
-            message.User2Id = ids.First(x => x != message.User1Id);
+            message.ReceiverId = ids.First();
+            message.RecipientId = ids.First(x => x != message.ReceiverId);
 
             await  _context.AddAsync(message);
         }

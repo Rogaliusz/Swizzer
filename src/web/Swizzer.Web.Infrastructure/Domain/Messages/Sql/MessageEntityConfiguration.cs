@@ -13,13 +13,13 @@ namespace Swizzer.Web.Infrastructure.Domain.Messages.Sql
         {
             builder.HasKey(x => x.Id);
 
-            builder.HasOne(x => x.User1)
+            builder.HasOne(x => x.Receiver)
                 .WithMany(x => x.Messages1)
-                .HasForeignKey(x => x.User1Id);
+                .HasForeignKey(x => x.ReceiverId);
 
-            builder.HasOne(x => x.User2)
+            builder.HasOne(x => x.Recipient)
                 .WithMany(x => x.Messages2)
-                .HasForeignKey(x => x.User2Id);
+                .HasForeignKey(x => x.RecipientId);
         }
     }
 }

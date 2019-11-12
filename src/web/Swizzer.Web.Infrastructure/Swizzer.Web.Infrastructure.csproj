@@ -21,4 +21,8 @@
     <ProjectReference Include="..\..\shared\Swizzer.Shared.Common\Swizzer.Shared.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Sql\Migrations" />
+  </ItemGroup>
+
 </Project>

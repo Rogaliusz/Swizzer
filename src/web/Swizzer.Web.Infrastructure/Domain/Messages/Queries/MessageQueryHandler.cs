@@ -31,7 +31,7 @@ namespace Swizzer.Web.Infrastructure.Domain.Messages.Queries
         public async Task<PaginationDto<MessageDto>> HandleAsync(GetMessagesQuery query)
         {
             var ids = (new[] { query.RequestBy, query.Reciever }).OrderBy(x => x).ToList();
-            var querable = _context.Messages.Where(x => ids.Any(s => s == x.User1Id) && ids.Any(s => s == x.User2Id));
+            var querable = _context.Messages.Where(x => ids.Any(s => s == x.ReceiverId) && ids.Any(s => s == x.RecipientId));
             var count = await querable.Where(query).CountAsync();
             var data = await querable.FilterBy(query).ToListAsync();
             var wrapper = new PaginationDto<Message> { Data = data, TotalCount = count };

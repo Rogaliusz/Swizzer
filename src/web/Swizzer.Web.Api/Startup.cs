@@ -41,11 +41,11 @@ namespace Swizzer.Web.Api
             services.AddTransient<ExceptionMiddleware>();
             services.AddSignalR();
             services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
+                {
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
                 .AddJwtBearer(x =>
                 {
                     if (SecuritySettings == null)
@@ -81,8 +81,7 @@ namespace Swizzer.Web.Api
             }
 
             Container = app.ApplicationServices.GetAutofacRoot();
-
-            app.UseHttpsRedirection();
+            
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();

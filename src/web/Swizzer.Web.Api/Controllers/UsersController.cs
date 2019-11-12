@@ -52,6 +52,11 @@ namespace Swizzer.Web.Api.Controllers
             var users = await DispatchQueryAsync<GetUsersQuery, PaginationDto<UserDto>>(query);
             return Ok(users);
         }
-
+        
+        [HttpGet("check")] 
+        public IActionResult GetUsersAsync()
+        {
+            return Ok("Works");
+        }
     }
 }

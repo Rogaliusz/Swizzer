@@ -14,10 +14,10 @@ namespace Swizzer.Web.Infrastructure.Domain.Messages.Models
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public Guid User1Id { get; set; }
-        public Guid User2Id { get; set; }
+        public Guid ReceiverId { get; set; }
+        public Guid RecipientId { get; set; }
 
-        public User User1 { get; set; }
-        public User User2 { get; set; }
+        public User Receiver { get; set; }
+        public User Recipient { get; set; }
     }
 }

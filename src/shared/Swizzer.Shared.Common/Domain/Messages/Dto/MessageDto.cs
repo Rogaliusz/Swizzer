@@ -14,10 +14,10 @@ namespace Swizzer.Shared.Common.Domain.Messages.Dto
         public string Content { get; set; }
         public DateTime CreatedAt { get; set; }
 
-        public Guid User1Id { get; set; }
-        public Guid User2Id { get; set; }
+        public Guid ReceiverId { get; set; }
+        public Guid RecipientId { get; set; }
 
-        public UserDto User1 { get; set; }
-        public UserDto User2 { get; set; }
+        public UserDto Receiver { get; set; }
+        public UserDto Recipient { get; set; }
     }
 }

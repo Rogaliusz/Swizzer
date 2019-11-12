@@ -17,11 +17,11 @@ namespace Swizzer.Client.Domain.Messages.Mappers
                 .ForMember(x => x.Reciever, opt => opt.MapFrom(src => src.CurrentReciever.Id));
 
             CreateMap<CreateMessageCommand, MessageDto>()
-                .ForMember(x => x.User1Id, opt => opt.MapFrom(src => src.Reciever))
-                .ForMember(x => x.User2Id, opt => opt.MapFrom(src => src.RequestBy))
+                .ForMember(x => x.ReceiverId, opt => opt.MapFrom(src => src.Reciever))
+                .ForMember(x => x.RecipientId, opt => opt.MapFrom(src => src.RequestBy))
                 .ReverseMap()
-                .ForMember(x => x.Reciever, opt => opt.MapFrom(src => src.User1Id))
-                .ForMember(x => x.RequestBy, opt => opt.MapFrom(src => src.User2Id));
+                .ForMember(x => x.Reciever, opt => opt.MapFrom(src => src.ReceiverId))
+                .ForMember(x => x.RequestBy, opt => opt.MapFrom(src => src.RecipientId));
         }
     }
 }

@@ -110,15 +110,15 @@ namespace Swizzer.Client.ViewModels
 
         private void FormatMessage(MessageDto obj)
         {
-            if (obj.User1Id == CurrentReciever?.Id)
+            if (obj.ReceiverId == CurrentReciever?.Id)
             {
-                obj.User1 = CurrentReciever;
-                obj.User2 = _currentUserContext.CurrentUser;
+                obj.Receiver = CurrentReciever;
+                obj.Recipient = _currentUserContext.CurrentUser;
             }
-            else if (obj.User2Id == CurrentReciever?.Id)
+            else if (obj.RecipientId == CurrentReciever?.Id)
             {
-                obj.User2 = CurrentReciever;
-                obj.User1 = _currentUserContext.CurrentUser;
+                obj.Recipient = CurrentReciever;
+                obj.Receiver = _currentUserContext.CurrentUser;
             }
         }
 
