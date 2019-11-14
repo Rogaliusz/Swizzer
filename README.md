@@ -1,7 +1,24 @@
-dotnet ef (migrations commands):
+Swizzer - very simple chat application created with good programming practices in .net core 3.0.
 
-!! WYKONUJEMY TO Z FOLDERU Infrastructure !!
-!! dotnet ef -- musi wyswietlac jednorozca.
+Solution includes:
+* Web api:
+  - .net core 3.0, SignalR, AutoMapper, Entity Framework (PostgreSQL), Autofac.
+  - CQRS, DTOs, Adapters, IoC, Singleton.
+* Frontend:
+  - wpf, prism, unity, fluent validator.
+  - MVVM, CQRS, Facade, IoC, Singleton.
+* Common:
+  - .net standard 2.0
+  - providers, dtos
+  
+ 
 
-dotnet ef migrations add ${nazwa} -s ${relatywna_sciezka_do_projektu_api} -o Sql/Migrations 
-dotnet ef database update -s ${relatywna_sciezka_do_projektu_api} 
+
+
+https://docs.microsoft.com/pl-pl/ef/core/managing-schemas/migrations/?tabs=dotnet-core-cli
+
+```
+dotnet ef migrations add ${name} -s ${project_path} -o Sql/Migrations   
+
+dotnet ef database update -s ${project_path} 
+```
