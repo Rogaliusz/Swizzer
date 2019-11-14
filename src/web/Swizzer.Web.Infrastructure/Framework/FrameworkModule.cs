@@ -6,6 +6,7 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Swizzer.Shared.Common.Extensions;
 using Swizzer.Web.Infrastructure.Framework.Caching;
+using Swizzer.Web.Infrastructure.Framework.Extensions;
 using Swizzer.Web.Infrastructure.Framework.Security;
 using Swizzer.Web.Infrastructure.Mappers;
 using Swizzer.Web.Infrastructure.Services;

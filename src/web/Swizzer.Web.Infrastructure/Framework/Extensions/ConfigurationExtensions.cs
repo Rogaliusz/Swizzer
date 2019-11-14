@@ -1,9 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Swizzer.Shared.Common.Extensions
+namespace Swizzer.Web.Infrastructure.Framework.Extensions
 {
     public static class ConfigurationExtensions
     {

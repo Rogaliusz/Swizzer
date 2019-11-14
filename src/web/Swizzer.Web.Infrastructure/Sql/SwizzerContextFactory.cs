@@ -6,6 +6,7 @@ using Swizzer.Web.Infrastructure.Settings;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Swizzer.Web.Infrastructure.Framework.Extensions;
 
 namespace Swizzer.Web.Infrastructure.Sql
 {

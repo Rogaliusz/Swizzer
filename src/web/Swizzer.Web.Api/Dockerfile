@@ -11,7 +11,7 @@ RUN dotnet publish web/Swizzer.Web.Api -c Release -o out
 # build runtime image
 FROM mcr.microsoft.com/dotnet/core/runtime:3.0
 WORKDIR /app
-COPY --from=build-env /app/out/ ./
+COPY --from=build-env /app      /out/ ./
 
 ENV ASPNETCORE_URLS http://*:8080
 EXPOSE 8080

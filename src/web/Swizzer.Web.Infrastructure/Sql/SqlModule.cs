@@ -6,6 +6,7 @@ using Swizzer.Web.Infrastructure.Sql;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Swizzer.Web.Infrastructure.Framework.Extensions;
 
 namespace Swizzer.Web.Infrastructure.IoC.Modules
 {
